@@ -1,6 +1,6 @@
 mod mthread;
 mod c_functions;
-use std::{sync::{Arc, Mutex}, thread};
+use std::{thread, time::Duration};
 
 use mthread::Mthread;
 
@@ -13,18 +13,19 @@ fn main() {
     //     Ok(())
     //
     // });
-   let mthread = Mthread::swap(||{
+   let mthread = Mthread::spawn(||{
         for  i in 0..100{
             println!("sus {i}");
         }
     });
-    let mthread2 = Mthread::swap(move ||{
+    let mthread2 = Mthread::spawn(move ||{
         for j in 0..100{
-            println!("Stan {j}")
+            println!("Stan {j}");   
         }
     });
 
     mthread.join();
     mthread2.join();
 }
+// program is running concurently not parallely .?????
 
